@@ -21,6 +21,9 @@ Next.js đang cấu hình `output: "export"` trong `next.config.mjs`, nên build
 
 ## Deploy Cloudflare Pages
 
+Project này là landing page tĩnh. Khi deploy lên Cloudflare, dùng **Pages + Static HTML Export**.
+Không chọn luồng **Workers/OpenNext** vì Cloudflare sẽ chạy `npx opennextjs-cloudflare build`, không phù hợp với cấu hình static export của project này.
+
 ### Cách khuyến nghị: Cloudflare Pages + GitHub
 
 Đẩy project này lên GitHub, sau đó vào Cloudflare Dashboard:
@@ -34,10 +37,13 @@ Next.js đang cấu hình `output: "export"` trong `next.config.mjs`, nên build
 
 - Root directory: để trống hoặc `/`
 - Framework preset: `Next.js (Static HTML Export)`
-- Build command: `npm run build`
+- Build command: `npm run build` hoặc `npx next build`
 - Build output directory: `out`
+- Node.js version: `22.16.0`
 
 Cloudflare sẽ tự cài dependencies, chạy build và publish thư mục `out/` lên domain dạng `*.pages.dev`.
+
+Nếu log deploy có dòng `npx opennextjs-cloudflare build`, nghĩa là project Cloudflare đang cấu hình sai chế độ. Vào `Settings > Builds & deployments` và sửa lại build command/output directory như trên, hoặc tạo lại project Pages mới với preset `Next.js (Static HTML Export)`.
 
 ### Cách nhanh nếu chưa dùng GitHub
 
